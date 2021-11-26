@@ -7,7 +7,7 @@ from corptools.models import CharacterMarketOrder
 from .models import BuyBackConfig
 
 @login_required
-@permission_required("ctbuyback:basic_access")
+@permission_required("ctbuybacks.basic_access")
 def buyback_list(request, corp_id=None):
     config = BuyBackConfig.objects.get(pk=1)
     orders = []
