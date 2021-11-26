@@ -21,11 +21,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
+"""
 class FatCog(commands.Cog):
-    """
-    All about fats!
-    """
     def __init__(self, bot):
         self.bot = bot
 
@@ -63,3 +60,4 @@ class FatCog(commands.Cog):
 
 def setup(bot):
     bot.add_cog(FatCog(bot))
+"""
