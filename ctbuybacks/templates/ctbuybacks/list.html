@@ -35,7 +35,7 @@ table.dataTable tbody td {
                     <tbody>
                         {% for m in orders %}
                         <tr>
-                            <td class=""><img href="{{ type_icon_url|m.type_id}}"></img></td>
+                            <td class=""><img href="{{ type_icon_url | m.type_id}}"></img></td>
                             <td class="">{{m.type_name.name}}</td>
                             <td class="">{{m.price|intcomma}}</td>
                             <td class="">{{m.volume_remain}} of {{m.volume_total}}</td>
