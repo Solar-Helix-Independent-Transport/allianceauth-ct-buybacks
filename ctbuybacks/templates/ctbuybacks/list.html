@@ -57,16 +57,25 @@ table.dataTable tbody td {
 {% block extra_script %}
     $(document).ready(function() {
         $('#market').DataTable({
+            filterDropDown: {
+                columns: [{
+                    idx: 4
+                        }],
+                bootstrap: true
+            },
             columnDefs: [
                 {
                     targets: 2,
                     render: $.fn.dataTable.render.number(',', '.', 2, null, " ISK")
-                }
+                },
+                {   sortable: false,
+                    targets: [0,3]
+                },
             ],
-            "order": [
+            order: [
                 [1, "asc"]
             ],
-            "pageLength": 50
+            pageLength: 50
         });
     });
 
