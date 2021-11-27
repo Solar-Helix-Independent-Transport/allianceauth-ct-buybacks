@@ -21,7 +21,8 @@ table.dataTable tbody td {
     <div class="col-lg-12">
         <br>
         <h1 class="text-center">Alliance Buybacks</h1>
-        <p class="text-center">Last updated sometime in the last 20 minutes</p>
+        <p class="text-center">Last updated: Sometime in the last 20 minutes</p>
+        <p class="text-center">Active Alliance Buybacks, listed as buy orders in the locations shown in the table.</p>
         <br>
         <div class="col-lg-12 container">
                 <table id="market" class="table table-responsive" style="width: 100%;">
@@ -37,7 +38,7 @@ table.dataTable tbody td {
                         <tr>
                             <td class=""><img src="{{ m.type_id|type_icon_url}}"></img></td>
                             <td class="">{{m.type_name.name}}</td>
-                            <td class="">{{m.price|intcomma}}</td>
+                            <td class="">{{m.price}}</td>
                             <td class="">{{m.volume_remain}} of {{m.volume_total}}</td>
                             <td class="">{{m.location_name.location_name}}</td>
                         </tr>
@@ -56,6 +57,12 @@ table.dataTable tbody td {
 {% block extra_script %}
     $(document).ready(function() {
         $('#market').DataTable({
+            columnDefs: [
+                {
+                    targets: 2,
+                    render: $.fn.dataTable.render.number(',', '.', 2, null, " ISK")
+                }
+            ],
             "order": [
                 [1, "asc"]
             ],
