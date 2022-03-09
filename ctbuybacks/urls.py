@@ -1,9 +1,9 @@
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 app_name = 'ctbuybacks'
 
 urlpatterns = [
-    url(r'^$', views.buyback_list, name='list'),
+    re_path(r'^$', views.buyback_list, name='list'),
     ]
