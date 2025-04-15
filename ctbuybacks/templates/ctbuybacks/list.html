@@ -1,27 +1,18 @@
-{% extends 'allianceauth/base.html' %}
+{% extends "allianceauth/base-bs5.html" %}
 {% load i18n %}
 {% load humanize  %}
 {% load evelinks  %}
 
 {% block page_title %}{% trans "Active Buybacks!" %}{% endblock %}
+{% block header_nav_brand %}{% translate "Active Buybacks" %}{% endblock header_nav_brand %}
+
 {% block extra_css %}
+    {% include 'bundles/datatables-css-bs5.html' %}
+{% endblock %}
 
-{% include 'bundles/datatables-css.html' %}
-<style>
-.form-control {
-    margin: 2px;
-}
-
-table.dataTable tbody td {
-    vertical-align: middle;
-}
-</style>
-{% endblock extra_css %}
 {% block content %}
     <div class="col-lg-12">
-        <br>
-        <h1 class="text-center">Alliance Buybacks</h1>
-        <p class="text-center">Last updated: Sometime in the last 20 minutes</p>
+        <p class="text-center">Last updated: Sometime in the last day or so</p>
         <p class="text-center">Active Buybacks are listed on market as "Buy Orders" in the locations shown in the table.</p>
         <br>
         <div class="col-lg-12 container">
@@ -50,33 +41,33 @@ table.dataTable tbody td {
     </div>
 {% endblock %}
 {% block extra_javascript %}
-    {% include 'bundles/datatables-js.html' %}
-	<script>!function(t){function e(t){var e={columns:[],columnsIdxList:[],bootstrap:!1,autoSize:!0,label:"Filter "};if("bootstrap"in t&&"boolean"==typeof t.bootstrap&&(e.bootstrap=t.bootstrap),"autoSize"in t&&"boolean"==typeof t.autoSize&&(e.autoSize=t.autoSize),"label"in t&&"string"==typeof t.label&&(e.label=t.label),"columns"in t)for(var i=0;i<t.columns.length;i++){var n=t.columns[i];if("idx"in n&&"number"==typeof n.idx){var o=n.idx;e.columns[o]={title:null,maxWidth:null,autoSize:!0},e.columnsIdxList.push(o),"title"in n&&"string"==typeof n.title&&(e.columns[o].title=n.title),"maxWidth"in n&&"string"==typeof n.maxWidth&&(e.columns[o].maxWidth=n.maxWidth),"autoSize"in n&&"boolean"==typeof n.autoSize&&(e.columns[o].autoSize=n.autoSize)}}return e}t(document).on("preInit.dt",function(i,n){if("dt"===i.namespace){var o=new t.fn.dataTable.Api(n),a=o.table().node().id,l=o.init();if("filterDropDown"in l){var r=e(l.filterDropDown);if(0!=r.columns.length){var u=o.table().container(),s=a+"_filterWrapper",c=s+" "+(r.bootstrap?"form-inline":"");t(u).prepend('<div id="'+s+'" class="'+c+'">'+r.label+"</div>"),o.columns(r.columnsIdxList).every(function(){var e=this.index(),i=null!==r.columns[e].title?r.columns[e].title:t(this.header()).html();""==i&&(i="column "+(e+1));var n="form-control "+a+"_filterSelect",o=a+"_filterSelect"+e;t("#"+s).append('<select id="'+o+'" class="'+n+'"></select>');var l=t("#"+o).empty().append('<option value="">('+i+")</option>");})}}}}),t(document).on("init.dt",function(i,n){if("dt"===i.namespace){var o=new t.fn.dataTable.Api(n),a=o.table().node().id,l=o.init();if("filterDropDown"in l){var r=e(l.filterDropDown);o.table().container();o.columns(r.columnsIdxList).every(function(){var e=this,i=e.index(),n=t("#"+(a+"_filterSelect"+i));n.on("change",function(){var i=t.fn.dataTable.util.escapeRegex(t(this).val());e.search(i?"^"+i+"$":"",!0,!1).draw()}),e.data().unique().sort().each(function(t,e){""!=t&&n.append('<option value="'+t+'">'+t+"</option>")})})}}})}(jQuery);</script>
-{% endblock %}
-
-{% block extra_script %}
-    $(document).ready(function() {
-        $('#market').DataTable({
-            filterDropDown: {
-                columns: [{
-                    idx: 4
-                        }],
-                bootstrap: true
-            },
-            columnDefs: [
-                {
-                    targets: 2,
-                    render: $.fn.dataTable.render.number(',', '.', 2, null, " ISK")
+    {% include 'bundles/datatables-js-bs5.html' %}
+    {% include 'bundles/filterdropdown-js.html' %}
+    <script>
+        $(document).ready(function() {
+            $('#market').DataTable({
+                filterDropDown: {
+                    columns: [{
+                        idx: 4
+                    }],
+                    bootstrap: true,
+                    bootstrap_version: 5
                 },
-                {   sortable: false,
-                    targets: [0,3]
-                },
-            ],
-            order: [
-                [1, "asc"]
-            ],
-            pageLength: 50
+                columnDefs: [
+                    {
+                        targets: 2,
+                        render: $.fn.dataTable.render.number(',', '.', 2, null, " ISK")
+                    },
+                    {   sortable: false,
+                        targets: [0,3]
+                    },
+                ],
+                order: [
+                    [1, "asc"]
+                ],
+                pageLength: 50,
+                autoWidth: false
+            });
         });
-    });
-
+    </script>
 {% endblock %}
